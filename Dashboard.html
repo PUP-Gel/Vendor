@@ -6,36 +6,113 @@
     <title>Vendor Market</title>
 
     <link rel="stylesheet" href="Css/Dashboard.css">
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
-    <div id = "Page1">
-        <div id="Navbars">
+    <main id = "Page1">
+        <section id="Navbars">
+
             <header id="Navbar1">
                 <div class="Content">
-                    <p>Market Survey System</p>
+                    <div id="PageTitle">
+                        <ion-icon name="storefront"></ion-icon>
+
+                        <p>Market Survey System</p>
+                    </div>
 
                     <div id = "Nav1Buttons">
-                        <button>Public Survey</button>
-                        <button>Admin Dashboard</button>
+                        <button class="Buttons" id="SurveyBtn">
+                            <ion-icon name="globe-outline" id="globe-icon"></ion-icon>
+                            Public Survey
+                        </button>
+
+                        <button class="Buttons" id="DashboardBtn">
+                            <ion-icon name="bar-chart"></ion-icon>
+                            Admin Dashboard
+                        </button>
                     </div>
                 </div>
             </header>
 
             <header id="Navbar2">
                 <div class="Content">
-                    <div>
-                        <p id="AdminDashboard">Admin Dashboard</p>
+                    <div id="DashboardTitle">
+                        <div id="AdminDashBoardTitle">
+                            <ion-icon name="stats-chart" id="title-icon"></ion-icon>
+                            <p id="AdminDashboard">Admin Dashboard</p>
+                        </div>
+
                         <p id="VendorCompliance">Market Vendor Compliance Management System</p>
                     </div>
 
                     <div>
-                        <button>Export Report</button>
+                        <button class="Buttons" id="ExportBtn">
+                            <ion-icon name="code-download-outline"></ion-icon>
+                            Export Report
+                        </button>
                     </div>
                 </div>
             </header>
-        </div>
 
+        </section>
 
-    </div>
+        <section id="Metrics">
+            <div id="total-vendors" class="card">
+                <div class="content">
+                    <p id="totalvendor-label" class="card-title">Total Vendors</p>
+                    <p class="Values">0</p>
+                    <p class="desc"></p>
+                </div>
+
+                <ion-icon name="people-outline"></ion-icon>
+            </div>
+
+            <div id="total-compliant" class="card">
+                <div class="content">
+                    <p class="card-title">Compliant</p>
+                    <p class="Values">0</p>
+                    <p class="desc">~0% compliance rate</p>
+                </div>
+
+                <ion-icon name="checkmark-circle-outline"></ion-icon>
+            </div>
+            
+             <div id="total-improvement" class="card">
+                <div class="content">
+                    <p class="card-title">Need Improvement</p>
+                    <p class="Values">0</p>
+                    <p class="desc">Requires follow-up action</p>
+                </div>
+
+                <ion-icon name="alert-circle-outline"></ion-icon>
+            </div>
+
+            <div id="non-compliant" class="card">
+                <div class="content">
+                    <p class="card-title">Non-Compliant</p>
+                    <p class="Values">0</p>
+                    <p class="desc">Immediate attention required</p>
+                </div>
+
+                <ion-icon name="close-circle-outline"></ion-icon>
+            </div>
+
+             <div id="warning" class="warning">
+                <div id="warning-title">
+                    <ion-icon name="alert-circle-outline" id = "warning-alert"></ion-icon>
+                    <p>Priority Actions Required</p>
+                </div>
+
+                <div id ="warning-message">
+                    <p>No vendors registered yet.</p>
+                    <p>Waiting for submissions...</p>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
 </body>
 </html>

@@ -1,3 +1,4 @@
+/* ---------- Global Styles ---------- */
 
 @font-face {
   font-family: 'SegoeUI';
@@ -62,6 +63,18 @@ body {
   background: #f5f5f5;
 }
 
+#PageTitle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+#Nav1Buttons {
+    display: flex;
+    gap: 10px;
+}
+
 #Navbar2 {
   background: #1d283a;
   padding: 0.5% 0 1% 0;
@@ -85,4 +98,246 @@ body {
 #VendorCompliance {
   color: #dadada;
   margin: 0;
+}
+
+#AdminDashBoardTitle {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 10px;
+}
+
+/* ---------- Buttons ---------- */
+
+.Buttons {
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 10px 22px;
+
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+#ExportBtn {
+    background-color: #029b63;
+    color: white;
+    border: none;
+
+    font-weight: bold;
+    font-size: small;
+}
+
+#SurveyBtn {
+    background-color: #cfcfd1;
+    color: #4b505a;
+    border: none;
+
+    font-weight: bold;
+    font-size: small;
+}
+
+#DashboardBtn {
+    background-color: #111e34;
+    color: white;
+    border: none;
+
+    font-weight: bold;
+    font-size: small;
+    align-items: flex-end;
+}
+
+/* ---------- Icons ---------- */
+
+#title-icon {
+  font-size: 2rem;
+  color: #ffffff;
+}
+
+#globe-icon {
+  font-size: 1rem;
+  color: #4b505a;
+}
+
+ion-icon[name="storefront"] {
+  font-size: 1.8rem;
+  color: #f78737;
+}   
+
+ion-icon[name="code-download-outline"] {
+  font-size: 1.5rem;
+  color: #ffffff;
+}   
+
+ion-icon[name="bar-chart"] {
+  font-size: 1rem;
+  color: #ffffff;
+}   
+
+#warning-alert {
+  font-size: 2.2rem;
+  color: #ffffff;
+}   
+
+ion-icon[name="people-outline"],
+ion-icon[name="checkmark-circle-outline"],
+ion-icon[name="alert-circle-outline"],
+ion-icon[name="close-circle-outline"] {
+  font-size: 2.5rem;
+  padding: 2%;
+  border-radius: 20%;
+}
+
+ion-icon[name="people-outline"] {
+  background-color: #5ea4ff31;
+}
+
+ion-icon[name="checkmark-circle-outline"] {
+  background-color: #57e6b442;
+}
+
+ion-icon[name="alert-circle-outline"] {
+  background-color: #ffa05242;
+}
+
+ion-icon[name="close-circle-outline"] {
+  background-color: #ff25255d;
+}
+
+/* ---------- Cards ---------- */
+
+#Metrics {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+
+    align-content: center;
+    justify-content: center;
+
+    margin: 3%;
+}
+
+#Metrics p {
+    margin: 0;
+}
+
+
+.card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 2px 5px 2px rgba(0, 0, 0, 0.1);
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+
+    font-size: large;
+    font-weight: semi-bold;
+}
+
+.warning {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 2px 4px 2px rgba(0, 0, 0, 0.1);
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 40px;
+
+    font-size: large;
+    color: white;
+    background-color: #fd8702;
+}
+
+.warning div {
+    display: flex;
+    flex-direction: row;
+}
+
+.warning p {
+    margin: 2px;
+}
+
+#warning-message p:last-child {
+    font-size: small;
+    font-weight: normal;
+    color: #ebebeb;
+}
+
+#warning-title {
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    gap: 10px;
+    font-weight: bolder;
+}
+
+#warning-message {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    margin: 0;
+    padding: 20px 30px;
+    background-color: #fc8e35;
+    border-radius: 15px;
+    font-weight: bold;
+}
+
+#total-vendors,
+#total-compliant,
+#total-improvement,
+#non-compliant {
+    border-left: 4px solid;
+}
+
+#total-vendors p.Values, #total-vendors p.desc,
+#total-compliant p.Values, #total-compliant p.desc,
+#total-improvement p.Values, #total-improvement p.desc,
+#non-compliant p.Values, #non-compliant p.desc {
+    color: inherit;
+}
+
+#total-vendors {
+    color: #67a8fb;
+}
+
+#total-compliant {
+    color: #49be96;
+}
+
+#total-improvement {
+    color: #fc8e35;
+}
+
+#non-compliant {
+    color: #ff0000;
+}
+
+.card-title {
+    font-size: large;
+    color: #000000;
+
+    font-weight: medium;
+    font-size: larger;
+}
+
+.Values {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.desc {
+    padding-top: 30px;
+    font-size: small;
 }
