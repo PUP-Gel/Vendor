@@ -1,0 +1,75 @@
+
+@font-face {
+  font-family: 'SegoeUI';
+  src: url('../Assets/Fonts/segoeuithis.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SegoeUI';
+  src: url('../Assets/Fonts/segoeuithibd.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SegoeUI';
+  src: url('../Assets/Fonts/segoeuithisi.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'SegoeUI';
+  src: url('../Assets/Fonts/segoeuithisz.ttf') format('truetype');
+  font-weight: 600;
+  font-style: italic;
+}
+
+body {
+    margin: 0%;
+    padding: 0;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    font-family: 'SegoeUI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#Page1 {
+    width: 100%;
+    height: 100%;
+}
+
+.Content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    padding-right: 3%;
+    padding-left: 3%;
+
+    padding-bottom: .5%;
+    padding-top: .5%;
+}
+
+#Navbar1 {
+    background: #f5f5f5;
+}
+
+#Navbar2 {
+    background: #1d283a;
+}
+
+#AdminDashboard {
+   color: #ffffff;
+   font-weight: bolder;
+   font-size: 180%;
+}
+
+#VendorCompliance {
+   color: #dadada;
+}
