@@ -1,217 +1,180 @@
 // ============================================================
-//  Dashboard.js — Market Vendor Compliance Management System
-//  Data source : localStorage
-//  Compliance  : Auto-computed from vendor score (0-100)
-//                  >= 75  → Compliant
-//                  50-74  → Need Improvement
-//                  < 50   → Non-Compliant
+//  dashboard_backend.js
+//  Replaces Dashboard.js — now fetches from Express API
+//  API Base: http://localhost:3000/api
 // ============================================================
 
-// ── Compliance Thresholds ─────────────────────────────────
-const THRESHOLD = {
-  COMPLIANT: 75,
-  IMPROVEMENT: 50,
-};
+const API = 'http://localhost:3000/api';
 
-// ── Sample / Seed Data (remove after real survey is live) ──
-const SEED_VENDORS = [
-  {
-    id: "v001",
-    name: "Juan dela Cruz Store",
-    category: "Food & Beverages",
-    contact: "09171234567",
-    dateSubmitted: "2026-04-20",
-    score: 88,
-  },
-  {
-    id: "v002",
-    name: "Maria's Handicraft",
-    category: "Handicraft",
-    contact: "09281234567",
-    dateSubmitted: "2026-04-22",
-    score: 62,
-  },
-  {
-    id: "v003",
-    name: "Pedro's Fresh Produce",
-    category: "Vegetables & Fruits",
-    contact: "09391234567",
-    dateSubmitted: "2026-04-25",
-    score: 40,
-  },
-  {
-    id: "v004",
-    name: "Aling Nena's Dry Goods",
-    category: "Dry Goods",
-    contact: "09501234567",
-    dateSubmitted: "2026-05-01",
-    score: 91,
-  },
-  {
-    id: "v005",
-    name: "Mang Tomas Carinderia",
-    category: "Food & Beverages",
-    contact: "09611234567",
-    dateSubmitted: "2026-05-03",
-    score: 55,
-  },
-];
+// ── Compliance thresholds (must match server.js) ──────────
+const THRESHOLD = { COMPLIANT: 75, IMPROVEMENT: 50 };
 
-// ── Helpers ───────────────────────────────────────────────
-
-/**
- * Determine compliance status from a numeric score.
- * @param {number} score  0-100
- * @returns {"Compliant"|"Need Improvement"|"Non-Compliant"}
- */
 function getStatus(score) {
-  if (score >= THRESHOLD.COMPLIANT) return "Compliant";
-  if (score >= THRESHOLD.IMPROVEMENT) return "Need Improvement";
-  return "Non-Compliant";
+    if (score >= THRESHOLD.COMPLIANT) return 'Compliant';
+    if (score >= THRESHOLD.IMPROVEMENT) return 'Need Improvement';
+    return 'Non-Compliant';
 }
 
-/**
- * Load vendors array from localStorage.
- * Seeds with sample data on very first run.
- */
-function loadVendors() {
-  const raw = localStorage.getItem("vendors");
-  if (!raw) {
-    // First run — seed sample data so the dashboard isn't empty
-    saveVendors(SEED_VENDORS);
-    return SEED_VENDORS;
-  }
-  try {
-    return JSON.parse(raw);
-  } catch {
-    return [];
-  }
+function scoreColor(score) {
+    if (score >= THRESHOLD.COMPLIANT) return '#43a047';
+    if (score >= THRESHOLD.IMPROVEMENT) return '#fb8c00';
+    return '#e53935';
 }
 
-/** Persist vendors array to localStorage. */
-function saveVendors(vendors) {
-  localStorage.setItem("vendors", JSON.stringify(vendors));
+function formatDate(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso);
+    return d.toLocaleDateString('en-PH', { year: 'numeric', month: 'short', day: 'numeric' });
 }
 
-/**
- * Compute dashboard metrics from a vendors array.
- */
-function computeMetrics(vendors) {
-  const total = vendors.length;
-  let compliant = 0,
-    improvement = 0,
-    nonCompliant = 0;
+// ── Inject required CSS ───────────────────────────────────
+function injectStyles() {
+    const style = document.createElement('style');
+    style.textContent = `
+    #vendor-list ul {
+      list-style: none; padding: 0; margin: 0;
+      width: 100%; display: flex; flex-direction: column; gap: 10px;
+    }
+    .category-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 16px; background: #f5f7fa; border-radius: 8px; font-size: .95rem;
+    }
+    .cat-name { font-weight: 600; color: #1d283a; }
+    .cat-count { background: #1d283a; color: white; border-radius: 12px; padding: 2px 10px; font-size: .8rem; }
 
-  vendors.forEach((v) => {
-    const status = getStatus(v.score);
-    if (status === "Compliant") compliant++;
-    else if (status === "Need Improvement") improvement++;
-    else nonCompliant++;
-  });
+    #filter-controls { display: flex; gap: 10px; padding: 0 3% 2% 3%; flex-wrap: wrap; }
+    #search-input {
+      flex: 1; min-width: 180px; padding: 10px 14px;
+      border: 1.5px solid #ddd; border-radius: 8px;
+      font-size: .9rem; font-family: inherit; outline: none; transition: border-color .2s;
+    }
+    #search-input:focus { border-color: #1d283a; }
+    #status-filter, #category-filter {
+      padding: 10px 14px; border: 1.5px solid #ddd; border-radius: 8px;
+      font-size: .9rem; font-family: inherit; background: white; cursor: pointer; outline: none;
+    }
 
-  const complianceRate = total > 0 ? Math.round((compliant / total) * 100) : 0;
+    #vendor-table-wrapper { padding: 0 3% 3% 3%; overflow-x: auto; }
+    #vendor-table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+    #vendor-table thead tr { background: #1d283a; color: white; }
+    #vendor-table th, #vendor-table td { padding: 10px 14px; text-align: left; }
+    #vendor-table tbody tr:nth-child(even) { background: #f9f9f9; }
+    #vendor-table tbody tr:hover { background: #eef2ff; }
 
-  return { total, compliant, improvement, nonCompliant, complianceRate };
+    .score-bar-wrap { display: flex; align-items: center; gap: 8px; }
+    .score-bar-wrap > div { height: 8px; border-radius: 4px; max-width: 80px; }
+    .score-bar-wrap > span { font-weight: bold; font-size: .85rem; }
+
+    .status-badge { padding: 4px 10px; border-radius: 20px; font-size: .78rem; font-weight: bold; white-space: nowrap; }
+    .status-Compliant         { background: #e8f5e9; color: #2e7d32; }
+    .status-Need-Improvement  { background: #fff3e0; color: #e65100; }
+    .status-Non-Compliant     { background: #ffebee; color: #c62828; }
+
+    #no-results { text-align: center; color: #aaa; padding: 20px; font-style: italic; }
+
+    .delete-btn {
+      background: none; border: none; cursor: pointer;
+      color: #e53935; font-size: .8rem; padding: 4px 8px;
+      border-radius: 6px; transition: background .15s;
+    }
+    .delete-btn:hover { background: #ffebee; }
+
+    #loading-overlay {
+      text-align: center; padding: 30px;
+      color: #888; font-style: italic; font-size: .9rem;
+    }
+  `;
+    document.head.appendChild(style);
 }
 
-/**
- * Extract unique product categories from vendors array.
- */
-function getCategories(vendors) {
-  return [...new Set(vendors.map((v) => v.category))].sort();
+// ── Fetch metrics from API and update cards ───────────────
+async function renderMetrics() {
+    try {
+        const res = await fetch(`${API}/metrics`);
+        const data = await res.json();
+
+        const vals = document.querySelectorAll('.Values');
+        if (vals[0]) vals[0].textContent = data.total;
+        if (vals[1]) vals[1].textContent = data.compliant;
+        if (vals[2]) vals[2].textContent = data.needImprovement;
+        if (vals[3]) vals[3].textContent = data.nonCompliant;
+
+        const descs = document.querySelectorAll('.desc');
+        if (descs[0]) descs[0].textContent = `${data.complianceRate}% compliance rate`;
+
+        // Warning banner
+        const warningBox = document.getElementById('warning');
+        const warningMsg = document.getElementById('warning-message');
+        if (!warningBox || !warningMsg) return;
+
+        if (data.total === 0) {
+            warningBox.style.backgroundColor = '#fd8702';
+            warningMsg.innerHTML = '<p>No vendors registered yet.</p><p>Waiting for submissions...</p>';
+        } else if (data.nonCompliant > 0) {
+            warningBox.style.backgroundColor = '#e53935';
+            warningMsg.innerHTML = `<p>${data.nonCompliant} vendor(s) are Non-Compliant.</p><p>Immediate action required.</p>`;
+        } else if (data.needImprovement > 0) {
+            warningBox.style.backgroundColor = '#fb8c00';
+            warningMsg.innerHTML = `<p>${data.needImprovement} vendor(s) need improvement.</p><p>Follow-up recommended.</p>`;
+        } else {
+            warningBox.style.backgroundColor = '#43a047';
+            warningMsg.innerHTML = '<p>All vendors are compliant! ✅</p><p>Keep up the good work.</p>';
+        }
+
+        // Categories
+        renderCategories(data.categories);
+
+    } catch (err) {
+        console.error('renderMetrics error:', err);
+        showApiError();
+    }
 }
 
-// ── DOM Update Functions ──────────────────────────────────
+// ── Render product category list ──────────────────────────
+function renderCategories(categories) {
+    const warningEl = document.getElementById('display-warning');
+    const listEl = document.getElementById('vendor-list');
+    if (!warningEl || !listEl) return;
 
-/** Update the 4 metric cards + warning banner. */
-function renderMetrics(vendors) {
-  const { total, compliant, improvement, nonCompliant, complianceRate } =
-    computeMetrics(vendors);
+    if (!categories || categories.length === 0) {
+        warningEl.style.display = 'flex';
+        listEl.style.display = 'none';
+        return;
+    }
 
-  // Metric values
-  document.querySelectorAll(".Values")[0].textContent = total;
-  document.querySelectorAll(".Values")[1].textContent = compliant;
-  document.querySelectorAll(".Values")[2].textContent = improvement;
-  document.querySelectorAll(".Values")[3].textContent = nonCompliant;
+    warningEl.style.display = 'none';
+    listEl.style.display = 'flex';
 
-  // Compliance rate desc
-  document.querySelectorAll(".desc")[0].textContent =
-    total > 0 ? `${complianceRate}% compliance rate` : "";
-
-  // Warning banner
-  const warningBox = document.getElementById("warning");
-  const warningMsg = document.getElementById("warning-message");
-
-  if (total === 0) {
-    warningBox.style.backgroundColor = "#fd8702";
-    warningMsg.innerHTML =
-      "<p>No vendors registered yet.</p><p>Waiting for submissions...</p>";
-  } else if (nonCompliant > 0) {
-    warningBox.style.backgroundColor = "#e53935";
-    warningMsg.innerHTML = `<p>${nonCompliant} vendor(s) are Non-Compliant.</p><p>Immediate action required.</p>`;
-  } else if (improvement > 0) {
-    warningBox.style.backgroundColor = "#fb8c00";
-    warningMsg.innerHTML = `<p>${improvement} vendor(s) need improvement.</p><p>Follow-up recommended.</p>`;
-  } else {
-    warningBox.style.backgroundColor = "#43a047";
-    warningMsg.innerHTML =
-      "<p>All vendors are compliant! ✅</p><p>Keep up the good work.</p>";
-  }
+    const ul = listEl.querySelector('ul');
+    ul.innerHTML = '';
+    categories.forEach(cat => {
+        const li = document.createElement('li');
+        li.className = 'category-item';
+        li.innerHTML = `<span class="cat-name">${cat}</span>`;
+        ul.appendChild(li);
+    });
 }
 
-/** Render product category pills/tags. */
-function renderCategories(vendors) {
-  const categories = getCategories(vendors);
-  const warningEl = document.getElementById("display-warning");
-  const listEl = document.getElementById("vendor-list");
+// ── Build filter section and vendor table ─────────────────
+async function buildFilterSection() {
+    const filterDiv = document.getElementById('vendor-filter');
+    if (!filterDiv) return;
 
-  if (categories.length === 0) {
-    warningEl.style.display = "flex";
-    listEl.style.display = "none";
-    return;
-  }
+    // Get categories for dropdown
+    let categories = [];
+    try {
+        const res = await fetch(`${API}/metrics`);
+        const data = await res.json();
+        categories = data.categories || [];
+    } catch (_) { }
 
-  warningEl.style.display = "none";
-  listEl.style.display = "flex";
-
-  const ul = listEl.querySelector("ul");
-  ul.innerHTML = "";
-
-  // Count vendors per category
-  const counts = {};
-  vendors.forEach((v) => {
-    counts[v.category] = (counts[v.category] || 0) + 1;
-  });
-
-  categories.forEach((cat) => {
-    const li = document.createElement("li");
-    li.classList.add("category-item");
-    li.innerHTML = `
-      <span class="cat-name">${cat}</span>
-      <span class="cat-count">${counts[cat]} vendor${counts[cat] > 1 ? "s" : ""}</span>
-    `;
-    ul.appendChild(li);
-  });
-}
-
-/** Build Filter & Search UI and vendor table inside #vendor-filter. */
-function buildFilterSection(allVendors) {
-  const filterDiv = document.getElementById("vendor-filter");
-
-  // Keep the title, append controls + table
-  filterDiv.innerHTML = `
+    filterDiv.innerHTML = `
     <p id="filter-title" class="data-title">
       <ion-icon name="funnel-outline"></ion-icon>
       Filter &amp; Search Vendors
     </p>
-
     <div id="filter-controls">
-      <input
-        type="text"
-        id="search-input"
-        placeholder="🔍  Search vendor name..."
-        autocomplete="off"
-      />
+      <input type="text" id="search-input" placeholder="🔍  Search vendor name..." autocomplete="off" />
       <select id="status-filter">
         <option value="All">All Status</option>
         <option value="Compliant">Compliant</option>
@@ -220,22 +183,22 @@ function buildFilterSection(allVendors) {
       </select>
       <select id="category-filter">
         <option value="All">All Categories</option>
-        ${getCategories(allVendors)
-          .map((c) => `<option value="${c}">${c}</option>`)
-          .join("")}
+        ${categories.map(c => `<option value="${c}">${c}</option>`).join('')}
       </select>
     </div>
-
     <div id="vendor-table-wrapper">
-      <table id="vendor-table">
+      <div id="loading-overlay">Loading vendors...</div>
+      <table id="vendor-table" style="display:none">
         <thead>
           <tr>
             <th>#</th>
             <th>Vendor Name</th>
+            <th>Stall</th>
             <th>Category</th>
             <th>Score</th>
             <th>Status</th>
-            <th>Date Submitted</th>
+            <th>Date</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody id="vendor-tbody"></tbody>
@@ -244,54 +207,61 @@ function buildFilterSection(allVendors) {
     </div>
   `;
 
-  // Wire up live filtering
-  document.getElementById("search-input").addEventListener("input", () =>
-    renderTable(allVendors)
-  );
-  document.getElementById("status-filter").addEventListener("change", () =>
-    renderTable(allVendors)
-  );
-  document.getElementById("category-filter").addEventListener("change", () =>
-    renderTable(allVendors)
-  );
+    // Load vendors then wire up filters
+    await loadAndRenderTable();
 
-  // Initial render
-  renderTable(allVendors);
+    document.getElementById('search-input').addEventListener('input', filterTable);
+    document.getElementById('status-filter').addEventListener('change', filterTable);
+    document.getElementById('category-filter').addEventListener('change', filterTable);
 }
 
-/** Filter vendors and render rows in the table. */
-function renderTable(allVendors) {
-  const query = document
-    .getElementById("search-input")
-    .value.toLowerCase()
-    .trim();
-  const statusFilter = document.getElementById("status-filter").value;
-  const categoryFilter = document.getElementById("category-filter").value;
+// ── All vendors stored in memory for client-side filtering ─
+let ALL_VENDORS = [];
 
-  const filtered = allVendors.filter((v) => {
-    const status = getStatus(v.score);
-    const matchName = v.name.toLowerCase().includes(query);
-    const matchStatus = statusFilter === "All" || status === statusFilter;
-    const matchCat = categoryFilter === "All" || v.category === categoryFilter;
-    return matchName && matchStatus && matchCat;
-  });
+async function loadAndRenderTable() {
+    try {
+        const res = await fetch(`${API}/vendors`);
+        ALL_VENDORS = await res.json();
+        document.getElementById('loading-overlay').style.display = 'none';
+        document.getElementById('vendor-table').style.display = 'table';
+        renderTableRows(ALL_VENDORS);
+    } catch (err) {
+        document.getElementById('loading-overlay').textContent =
+            '❌ Cannot connect to server. Make sure Node.js is running.';
+    }
+}
 
-  const tbody = document.getElementById("vendor-tbody");
-  const noResults = document.getElementById("no-results");
+function filterTable() {
+    const query = document.getElementById('search-input').value.toLowerCase().trim();
+    const statusFilter = document.getElementById('status-filter').value;
+    const categoryFilter = document.getElementById('category-filter').value;
 
-  if (filtered.length === 0) {
-    tbody.innerHTML = "";
-    noResults.style.display = "block";
-    return;
-  }
+    const filtered = ALL_VENDORS.filter(v => {
+        const matchName = v.name.toLowerCase().includes(query);
+        const matchStatus = statusFilter === 'All' || v.status === statusFilter;
+        const matchCat = categoryFilter === 'All' || v.category === categoryFilter;
+        return matchName && matchStatus && matchCat;
+    });
 
-  noResults.style.display = "none";
-  tbody.innerHTML = filtered
-    .map(
-      (v, i) => `
+    renderTableRows(filtered);
+}
+
+function renderTableRows(vendors) {
+    const tbody = document.getElementById('vendor-tbody');
+    const noResult = document.getElementById('no-results');
+
+    if (vendors.length === 0) {
+        tbody.innerHTML = '';
+        noResult.style.display = 'block';
+        return;
+    }
+
+    noResult.style.display = 'none';
+    tbody.innerHTML = vendors.map((v, i) => `
     <tr>
       <td>${i + 1}</td>
       <td>${v.name}</td>
+      <td>${v.stall_number}</td>
       <td>${v.category}</td>
       <td>
         <div class="score-bar-wrap">
@@ -299,264 +269,75 @@ function renderTable(allVendors) {
           <span>${v.score}</span>
         </div>
       </td>
-      <td><span class="status-badge status-${getStatus(v.score).replace(/ /g, "-")}">${getStatus(v.score)}</span></td>
-      <td>${formatDate(v.dateSubmitted)}</td>
+      <td><span class="status-badge status-${v.status.replace(/ /g, '-')}">${v.status}</span></td>
+      <td>${formatDate(v.date_submitted)}</td>
+      <td>
+        <button class="delete-btn" onclick="deleteVendor(${v.id}, '${v.name}')">
+          &#x1F5D1; Delete
+        </button>
+      </td>
     </tr>
-  `
-    )
-    .join("");
+  `).join('');
 }
 
-/** Returns a color hex based on score. */
-function scoreColor(score) {
-  if (score >= THRESHOLD.COMPLIANT) return "#43a047";
-  if (score >= THRESHOLD.IMPROVEMENT) return "#fb8c00";
-  return "#e53935";
+// ── Delete vendor ─────────────────────────────────────────
+async function deleteVendor(id, name) {
+    if (!confirm(`Delete vendor "${name}"? This cannot be undone.`)) return;
+    try {
+        const res = await fetch(`${API}/vendors/${id}`, { method: 'DELETE' });
+        if (!res.ok) throw new Error('Delete failed');
+        ALL_VENDORS = ALL_VENDORS.filter(v => v.id !== id);
+        filterTable();
+        await renderMetrics(); // refresh counts
+    } catch (err) {
+        alert('Failed to delete vendor. Check server connection.');
+    }
 }
 
-/** Format ISO date to readable string. */
-function formatDate(iso) {
-  if (!iso) return "—";
-  const d = new Date(iso);
-  return d.toLocaleDateString("en-PH", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
+// ── Export CSV ────────────────────────────────────────────
+function exportCSV() {
+    if (ALL_VENDORS.length === 0) { alert('No vendor data to export.'); return; }
+
+    const headers = ['ID', 'Vendor Name', 'Stall', 'Category', 'Contact', 'Score', 'Status', 'Date Submitted'];
+    const rows = ALL_VENDORS.map(v => [
+        v.id, `"${v.name}"`, `"${v.stall_number}"`, `"${v.category}"`,
+        v.contact, v.score, v.status, v.date_submitted,
+    ]);
+
+    const csv = [headers, ...rows].map(r => r.join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `VendorReport_${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
 }
 
-// ── Export Report ─────────────────────────────────────────
-
-/** Export vendor data as CSV file. */
-function exportCSV(vendors) {
-  if (vendors.length === 0) {
-    alert("No vendor data to export.");
-    return;
-  }
-
-  const headers = [
-    "ID",
-    "Vendor Name",
-    "Category",
-    "Contact",
-    "Date Submitted",
-    "Score",
-    "Status",
-  ];
-  const rows = vendors.map((v) => [
-    v.id,
-    `"${v.name}"`,
-    `"${v.category}"`,
-    v.contact,
-    v.dateSubmitted,
-    v.score,
-    getStatus(v.score),
-  ]);
-
-  const csv = [headers, ...rows].map((r) => r.join(",")).join("\n");
-  const blob = new Blob([csv], { type: "text/csv" });
-  const url = URL.createObjectURL(blob);
-
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = `VendorReport_${new Date().toISOString().slice(0, 10)}.csv`;
-  a.click();
-  URL.revokeObjectURL(url);
+// ── Show API connection error ─────────────────────────────
+function showApiError() {
+    const warningMsg = document.getElementById('warning-message');
+    if (warningMsg) {
+        warningMsg.innerHTML = '<p>❌ Cannot connect to server.</p><p>Make sure Node.js is running on port 3000.</p>';
+        document.getElementById('warning').style.backgroundColor = '#e53935';
+    }
 }
 
 // ── Navigation ────────────────────────────────────────────
-
 function setupNavigation() {
-  const surveyBtn = document.getElementById("SurveyBtn");
-  const dashboardBtn = document.getElementById("DashboardBtn");
+    const surveyBtn = document.getElementById('SurveyBtn');
+    const dashboardBtn = document.getElementById('DashboardBtn');
+    const exportBtn = document.getElementById('ExportBtn');
 
-  if (surveyBtn) {
-    surveyBtn.addEventListener("click", () => {
-      window.location.href = "Survey.html";
-    });
-  }
-
-  if (dashboardBtn) {
-    dashboardBtn.addEventListener("click", () => {
-      window.location.href = "Dashboard.html";
-    });
-  }
+    if (surveyBtn) surveyBtn.addEventListener('click', () => window.location.href = '/Survey.html');
+    if (dashboardBtn) dashboardBtn.addEventListener('click', () => window.location.href = '/Dashboard.html');
+    if (exportBtn) exportBtn.addEventListener('click', exportCSV);
 }
 
-// ── Inject Required CSS ───────────────────────────────────
-
-function injectStyles() {
-  const style = document.createElement("style");
-  style.textContent = `
-    /* ── Category List ── */
-    #vendor-list ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .category-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 16px;
-      background: #f5f7fa;
-      border-radius: 8px;
-      font-size: 0.95rem;
-    }
-
-    .cat-name {
-      font-weight: 600;
-      color: #1d283a;
-    }
-
-    .cat-count {
-      background: #1d283a;
-      color: white;
-      border-radius: 12px;
-      padding: 2px 10px;
-      font-size: 0.8rem;
-    }
-
-    /* ── Filter Controls ── */
-    #filter-controls {
-      display: flex;
-      gap: 10px;
-      padding: 0 3% 2% 3%;
-      flex-wrap: wrap;
-    }
-
-    #search-input {
-      flex: 1;
-      min-width: 180px;
-      padding: 10px 14px;
-      border: 1.5px solid #ddd;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      font-family: inherit;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    #search-input:focus {
-      border-color: #1d283a;
-    }
-
-    #status-filter,
-    #category-filter {
-      padding: 10px 14px;
-      border: 1.5px solid #ddd;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      font-family: inherit;
-      background: white;
-      cursor: pointer;
-      outline: none;
-    }
-
-    /* ── Vendor Table ── */
-    #vendor-table-wrapper {
-      padding: 0 3% 3% 3%;
-      overflow-x: auto;
-    }
-
-    #vendor-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.9rem;
-    }
-
-    #vendor-table thead tr {
-      background: #1d283a;
-      color: white;
-    }
-
-    #vendor-table th,
-    #vendor-table td {
-      padding: 10px 14px;
-      text-align: left;
-    }
-
-    #vendor-table tbody tr:nth-child(even) {
-      background: #f9f9f9;
-    }
-
-    #vendor-table tbody tr:hover {
-      background: #eef2ff;
-    }
-
-    /* ── Score Bar ── */
-    .score-bar-wrap {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .score-bar-wrap > div {
-      height: 8px;
-      border-radius: 4px;
-      max-width: 80px;
-    }
-
-    .score-bar-wrap > span {
-      font-weight: bold;
-      font-size: 0.85rem;
-    }
-
-    /* ── Status Badges ── */
-    .status-badge {
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-size: 0.78rem;
-      font-weight: bold;
-      white-space: nowrap;
-    }
-
-    .status-Compliant {
-      background: #e8f5e9;
-      color: #2e7d32;
-    }
-
-    .status-Need-Improvement {
-      background: #fff3e0;
-      color: #e65100;
-    }
-
-    .status-Non-Compliant {
-      background: #ffebee;
-      color: #c62828;
-    }
-
-    /* ── No Results ── */
-    #no-results {
-      text-align: center;
-      color: #aaa;
-      padding: 20px;
-      font-style: italic;
-    }
-  `;
-  document.head.appendChild(style);
-}
-
-// ── Main Init ─────────────────────────────────────────────
-
-document.addEventListener("DOMContentLoaded", () => {
-  injectStyles();
-  setupNavigation();
-
-  const vendors = loadVendors();
-
-  renderMetrics(vendors);
-  renderCategories(vendors);
-  buildFilterSection(vendors);
-
-  // Export button
-  const exportBtn = document.getElementById("ExportBtn");
-  if (exportBtn) {
-    exportBtn.addEventListener("click", () => exportCSV(vendors));
-  }
+// ── Init ──────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', async () => {
+    injectStyles();
+    setupNavigation();
+    await renderMetrics();
+    await buildFilterSection();
 });
