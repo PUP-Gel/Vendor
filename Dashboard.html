@@ -144,10 +144,35 @@
             </div>
 
             <div id="vendor-filter" class="data-card">
-                <p id="filter-title" class="data-title">
-                    <ion-icon name="funnel-outline"></ion-icon>
-                    Filter & Search Vendors
-                </p>
+                    <p id="filter-title" class="data-title">
+                        <ion-icon name="funnel-outline"></ion-icon>
+                        Filter & Search Vendors
+                    </p>
+
+                <div class="data-content-filter">
+                    <div id="search-content" class="category-container">
+                        <ion-icon name="search-outline"></ion-icon>
+                        <input type="search" id="search-input" placeholder="Search by name or permit number...">
+                    </div>
+
+                    <select id="all-statuses" class="dropdown-option">
+                        <option value="">All Statuses</option>
+                        <option value="compliant">Compliant</option>
+                        <option value="need-improvement">Need Improvement</option>
+                        <option value="non-compliant">Non-Compliant</option>
+                    </select>
+
+                    <select id="all-products" class="dropdown-option">
+                        <option value="">All Products</option>
+                        <option value="school-supply">School Supply</option>
+                        <option value="office-supplies">Office Supplies</option>
+                        <option value="food-beverage">Food & Beverage</option>
+                        <option value="clothing-apparel">Clothing & Apparel</option>
+                        <option value="electronics">Electronics</option>
+                    </select>
+
+                    <p>Showing 0 of 0 vendors</p>
+                </div>
             </div>
         </section>
 

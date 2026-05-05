@@ -220,15 +220,17 @@ ion-icon[name="bag-outline"] {
   color: #d3d3d3c2;
 }
 
+ion-icon[name="search-outline"] {
+  font-size: 2rem;
+  color: #d3d3d3c2;
+}
+
 /* ---------- Cards ---------- */
 
 #Metrics {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
-
-    align-content: center;
-    justify-content: center;
 
     margin: 3%;
 }
@@ -460,4 +462,67 @@ ion-icon[name="bag-outline"] {
     color: #ee0101;
 
     font-size: xx-large;
+}
+
+/*---------- Filter & Search ---------- */
+#search-content {
+  border: #000000 1px solid;
+  width: 50%;
+  height: 50px;
+  padding: 1%;
+  border-radius: 10px;
+  border-color: #dddddd;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+#search-input {
+  width: 90%;
+  height: 50px;
+  border: none;
+}
+
+#search-input:focus {
+  outline: none;
+  border-color: #999;
+}
+
+.dropdown-option{
+  border: #000000 1px solid;
+  width: 40%;
+  height: 50px;
+  padding: 1%;
+  border-radius: 10px;
+  border-color: #dddddd;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.data-content-filter {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 15px;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 10px;
+
+    padding: 15px;
+    margin-top: 10px;
+}
+
+.data-content-filter p {
+    margin: 0;
+    font-size: small;
+    color: #999;
 }
