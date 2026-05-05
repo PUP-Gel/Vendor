@@ -34,7 +34,7 @@ body {
 
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
 
   font-family: 'SegoeUI', Tahoma, Geneva, Verdana, sans-serif;
 }

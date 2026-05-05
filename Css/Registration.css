@@ -1,0 +1,167 @@
+
+body {
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  font-family: 'SegoeUI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+#Page2 {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.Content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0.5% 3%;
+}
+
+
+/* ---------- Navigation Bars ---------- */
+
+#Navbar1 {
+  background: #ffffff;
+}
+
+#PageTitle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+#Nav1Buttons {
+    display: flex;
+    gap: 10px;
+}
+
+#Navbar2 {
+  background: #1d283a;
+  padding: 0.5% 0 1% 0;
+}
+
+/* ---------- Buttons ---------- */
+
+.Buttons {
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 10px 22px;
+
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+#SurveyBtn {
+    background-color: #cfcfd1;
+    color: #4b505a;
+    border: none;
+
+    font-weight: bold;
+    font-size: small;
+}
+
+#DashboardBtn {
+    background-color: #111e34;
+    color: white;
+    border: none;
+
+    font-weight: bold;
+    font-size: small;
+    align-items: flex-end;
+}
+
+/* ---------- Icons ---------- */
+
+#globe-icon {
+    font-size: 1rem;
+    color: #4b505a;
+}
+
+
+ion-icon[name="bar-chart"] {
+    font-size: 1rem;
+    color: #ffffff;
+}   
+
+ion-icon[name="sparkles-outline"] {
+    font-size: 2rem;
+    color: #ffffffb0;
+}   
+
+#storefront-announcement {
+    font-size: 5rem;
+    color: #ffffff;
+}
+
+#storefront-title {
+    font-size: 1.8rem;
+    color: #f78737;
+}
+
+/* ---------- announcement ---------- */
+
+#announcement {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    background-color: #ff6a006b;
+    
+    padding: 2%;
+}
+
+#mini-desc {
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    gap: 10px;
+}
+
+#announcement-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+
+    padding-bottom: 3%;
+}
+
+#announcement p {
+    text-align: center;
+    margin: 0;
+}
+
+#announcement-desc p {
+    font-size: 1.5rem;
+    color: #ffffff;
+
+    font-weight: medium;
+}
+
+#announcement-desc p:last-child {
+    color: #ffffffb0;
+}
+
+#announcement-header p {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ffffff;
+}
