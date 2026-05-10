@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Local Tourism Feedback Survey</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo" id="nav-logo">Local Tourism Feedback Survey</div>
+
+  <div class="nav-right">
+    <a href="#" class="nav-link" id="nav-dest">Destinations</a>
+
+    <button class="lang-btn" onclick="toggleLang()">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="10" cy="10" r="8"/>
+        <path d="M10 2c0 0-3 4-3 8s3 8 3 8M10 2c0 0 3 4 3 8s-3 8-3 8M2 10h16"/>
+      </svg>
+
+      <span id="lang-label">Language (EN/PH)</span>
+    </button>
+  </div>
+</nav>
+
+<section class="hero" id="hero-section">
+
+  <div class="hero-bg"></div>
+  <div class="hero-lines"></div>
+
+  <div class="pillars">
+    <div class="pillar"></div>
+    <div class="pillar"></div>
+    <div class="pillar"></div>
+    <div class="pillar"></div>
+  </div>
+
+  <div class="ceiling-glow"></div>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+
+    <span class="hero-tag" id="tag-en">Visitor Experience Program</span>
+    <span class="hero-tag" id="tag-ph" style="display:none">Programa ng Karanasan ng Bisita</span>
+
+    <h1 class="hero-title">
+      <span id="title-line1-en">Rate Your</span>
+      <span id="title-line1-ph" style="display:none">I-rate ang</span>
+
+      <span id="title-line2-en">Experience</span>
+      <span id="title-line2-ph" style="display:none">Inyong Karanasan</span>
+    </h1>
+
+    <p class="hero-desc" id="desc-en">
+      This survey gathers insights on visitors' experiences and preferences
+      to improve services and promote sustainable tourism.
+    </p>
+
+    <p class="hero-desc" id="desc-ph" style="display:none">
+      Ang survey na ito ay nangongolekta ng mga pananaw ukol sa karanasan
+      ng mga bisita upang mapabuti ang serbisyo at turismo.
+    </p>
+
+    <button class="cta-btn" onclick="openSurvey()">
+
+      <span id="cta-en">Take the Survey Now</span>
+      <span id="cta-ph" style="display:none">Sumagot na ng Survey</span>
+
+      <svg class="cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </button>
+  </div>
+</section>
+
+<div class="survey-page" id="survey-page">
+
+  <div class="survey-bg"></div>
+  <div class="survey-bg-overlay"></div>
+
+  <div class="survey-container">
+
+    <div class="survey-left">
+
+      <h2 class="panel-title">Visitor's Information</h2>
+
+      <div class="field-group">
+        <label class="field-label">1. Name</label>
+        <input class="s-input" type="text" id="inp-name" placeholder="Enter your response here"/>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">2. Nationality</label>
+
+        <div class="radio-group">
+          <label class="radio-item">
+            <input type="radio" name="nationality" value="local"/>
+            Local
+          </label>
+
+          <label class="radio-item">
+            <input type="radio" name="nationality" value="foreign"/>
+            Foreign
+          </label>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">3. Date of Visit</label>
+        <input class="s-date" type="date" id="inp-date"/>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">4. Visit Frequency</label>
+
+        <div class="radio-group">
+
+          <label class="radio-item">
+            <input type="radio" name="frequency" value="first"/>
+            First-Time Visitor
+          </label>
+
+          <label class="radio-item">
+            <input type="radio" name="frequency" value="repeat"/>
+            Repeat Visitor
+          </label>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="survey-right">
+
+      <h2 class="section-title">Experience Rating</h2>
+
+      <div class="rating-row">
+
+        <span class="rating-label">
+          1. Attractions & Activities
+        </span>
+
+        <div class="star-row" id="stars-1">
+          <span class="star" onclick="setRating(1,1)">★</span>
+          <span class="star" onclick="setRating(1,2)">★</span>
+          <span class="star" onclick="setRating(1,3)">★</span>
+          <span class="star" onclick="setRating(1,4)">★</span>
+          <span class="star" onclick="setRating(1,5)">★</span>
+        </div>
+      </div>
+
+      <div class="rating-row">
+
+        <span class="rating-label">
+          2. Cleanliness & Environment
+        </span>
+
+        <div class="star-row" id="stars-2">
+          <span class="star" onclick="setRating(2,1)">★</span>
+          <span class="star" onclick="setRating(2,2)">★</span>
+          <span class="star" onclick="setRating(2,3)">★</span>
+          <span class="star" onclick="setRating(2,4)">★</span>
+          <span class="star" onclick="setRating(2,5)">★</span>
+        </div>
+      </div>
+
+      <div class="rating-row">
+
+        <span class="rating-label">
+          3. Accessibility & Transportation
+        </span>
+
+        <div class="star-row" id="stars-3">
+          <span class="star" onclick="setRating(3,1)">★</span>
+          <span class="star" onclick="setRating(3,2)">★</span>
+          <span class="star" onclick="setRating(3,3)">★</span>
+          <span class="star" onclick="setRating(3,4)">★</span>
+          <span class="star" onclick="setRating(3,5)">★</span>
+        </div>
+      </div>
+
+      <div class="rating-row">
+
+        <span class="rating-label">
+          4. Hospitality & Safety
+        </span>
+
+        <div class="star-row" id="stars-4">
+          <span class="star" onclick="setRating(4,1)">★</span>
+          <span class="star" onclick="setRating(4,2)">★</span>
+          <span class="star" onclick="setRating(4,3)">★</span>
+          <span class="star" onclick="setRating(4,4)">★</span>
+          <span class="star" onclick="setRating(4,5)">★</span>
+        </div>
+      </div>
+
+      <hr class="section-divider"/>
+
+      <h3 class="comment-title">Comments / Feedback</h3>
+
+      <div class="comment-group">
+        <label class="comment-label">
+          1. Would you visit again?
+        </label>
+
+        <textarea class="s-textarea" id="inp-revisit"></textarea>
+      </div>
+
+      <div class="comment-group">
+        <label class="comment-label">
+          2. Would you recommend this place?
+        </label>
+
+        <textarea class="s-textarea" id="inp-recommend"></textarea>
+      </div>
+
+      <div class="submit-wrap">
+        <button class="submit-btn" onclick="submitSurvey()">
+          SUBMIT
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="success-screen" id="success-screen">
+
+  <div class="success-icon">🏛️</div>
+
+  <h2>Thank you!</h2>
+
+  <p>
+    Your feedback helps us improve local tourism.
+  </p>
+
+  <button class="back-btn" onclick="goHome()">
+    ← Back to Home
+  </button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
