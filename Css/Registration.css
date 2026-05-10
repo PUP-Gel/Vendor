@@ -115,6 +115,12 @@ ion-icon[name="sparkles-outline"] {
     color: #f78737;
 }
 
+ion-icon[name="checkmark-circle-outline"] {
+    font-size: 1.5rem;
+    color: #ffffff;
+    text-align: center;
+}   
+
 /* ---------- announcement ---------- */
 
 #announcement {
