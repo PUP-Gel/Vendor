@@ -21,12 +21,12 @@
                 </div>
 
                  <div id="Nav1Buttons">
-                    <button class="Buttons" id="SurveyBtn">
+                    <button class="Buttons" id="SurveyBtn" onclick="window.location.href='Registration.html'">
                          <ion-icon name="globe-outline" id="globe-icon"></ion-icon>
-                         Public Survey
+                         Register
                      </button>
 
-                    <button class="Buttons" id="DashboardBtn">
+                    <button class="Buttons" id="DashboardBtn" onclick="window.location.href='Dashboard.html'">
                          <ion-icon name="bar-chart"></ion-icon>
                           Admin Dashboard
                     </button>
@@ -89,10 +89,10 @@
                             <p>Sanitary Practices Assessment</p>
 
                             <label class="option">
-                                <input type="radio" name="sanitary" value="good">
+                                <input type="radio" name="sanitary" value="good" required>
                                 <span>
                                 <strong>Good</strong><br>
-                                Meets all sanitation standards
+                                    Meets all sanitation standards
                                 </span>
                             </label>
 
@@ -100,7 +100,7 @@
                                 <input type="radio" name="sanitary" value="fair">
                                 <span>
                                 <strong>Fair</strong><br>
-                                Meets most standards, some improvements needed
+                                    Meets most standards, some improvements needed
                                 </span>
                             </label>
 
@@ -108,7 +108,7 @@
                                 <input type="radio" name="sanitary" value="poor">
                                 <span>
                                 <strong>Poor</strong><br>
-                                Does not meet required standards
+                                    Does not meet required standards
                                 </span>
                             </label>
                         </fieldset>
