@@ -34,7 +34,7 @@ body {
 
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
 
   font-family: 'SegoeUI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -525,4 +525,57 @@ ion-icon[name="search-outline"] {
     margin: 0;
     font-size: small;
     color: #999;
+}
+
+/*---------- Vendor List ---------- */
+
+#total-vendor-list {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  padding: 0 3%;
+}
+
+#vendor-list-content {
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 10px;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.05);
+  overflow: hidden; 
+
+  margin-bottom: 5%;
+}
+
+
+#vendor-list-content table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'SegoeUI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#vendor-list-content th {
+  background-color: #f5f7fa;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 14px 16px;
+  color: #333;
+}
+
+#vendor-list-content td {
+  padding: 14px 16px;
+  border-top: 1px solid #eeeeee;
+  font-size: 14px;
+  color: #555;
+}
+
+#vendor-list-content tr:hover td {
+  background-color: #f9fbfd;
+}
+
+.card:hover,
+.data-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
 }
