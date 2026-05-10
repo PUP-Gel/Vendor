@@ -50,6 +50,98 @@
             </div>
            
         </div>
+
+        <div id="registration-background">
+            <div id="registration-form">
+                <!-- Registration form content goes here -->
+                <div id="Form-title">
+                    <p><ion-icon name="checkmark-circle-outline"></ion-icon> Vendor Registration Form</p>
+                    <p>Complete all fields to register your market stall</p>
+                </div>
+
+                <div id="Form-content">
+                    <form>  
+                        <div id="Input-group">
+                            <div id="Buisness-name-input">
+                                <p><ion-icon name="bag-handle-outline"></ion-icon> Business Name</p>
+                                <input type="text" placeholder="Vendor Name" required>
+                            </div>
+
+                            <div id="Healt-permit-input">
+                                <p>Health Permit</p>
+                                <input type="text" placeholder="eg., HP-2026-12345" required>
+                            </div>
+
+                            <div id="Product-category-input">
+                                <p>Product Category</p>
+
+                                <select name="all-products" id="product-category" required>
+                                    <option value="school-supply">School Supply</option>
+                                    <option value="office-supplies">Office Supplies</option>
+                                    <option value="food-beverage">Food & Beverage</option>
+                                    <option value="clothing-apparel">Clothing & Apparel</option>
+                                    <option value="electronics">Electronics</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <fieldset class="practice-assessment">
+                            <p>Sanitary Practices Assessment</p>
+
+                            <label class="option">
+                                <input type="radio" name="sanitary" value="good">
+                                <span>
+                                <strong>Good</strong><br>
+                                Meets all sanitation standards
+                                </span>
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="sanitary" value="fair">
+                                <span>
+                                <strong>Fair</strong><br>
+                                Meets most standards, some improvements needed
+                                </span>
+                            </label>
+
+                            <label class="option">
+                                <input type="radio" name="sanitary" value="poor">
+                                <span>
+                                <strong>Poor</strong><br>
+                                Does not meet required standards
+                                </span>
+                            </label>
+                        </fieldset>
+
+                        <fieldset class="standards">
+                            <p>Stall Cleanliness Standards</p>
+                            <p>Select all practices that apply to your stall:</p>
+
+                            <label class="option">
+                                <input type="checkbox" name="cleanliness" value="daily-cleaning">
+                                
+                                <span>
+                                <strong>Daily Cleaning</strong><br>
+                                    Stall is cleaned thoroughly every day
+                                </span>
+                            </label>
+
+                            <label class="option">
+                                <input type="checkbox" name="cleanliness" value="waste-disposal">
+                                
+                                <span>
+                                <strong>Waste Disposal</strong><br>
+                                    Proper waste segregation and disposal system
+                                </span>
+                            </label>
+                        </fieldset>
+
+                        <button id="Submit-btn"><ion-icon name="checkmark-circle-outline"></ion-icon> Submit Registration</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+       
     </main>
     
 </body>

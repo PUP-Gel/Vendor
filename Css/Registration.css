@@ -8,6 +8,7 @@ body {
   align-items: stretch;
 
   font-family: 'SegoeUI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #fff3de;
 }
 
 
@@ -121,10 +122,19 @@ ion-icon[name="sparkles-outline"] {
     flex-direction: column;
 
     align-items: center;
-
-    background-color: #ff6a006b;
     
     padding: 2%;
+
+    background-image:  linear-gradient(
+            rgba(255, 119, 0, 0.637),
+            rgba(219, 102, 0, 0.76)
+        ),
+        url("../Assets/Images/pixifant-market-1558658.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    color: #f10000;
 }
 
 #mini-desc {
@@ -157,11 +167,212 @@ ion-icon[name="sparkles-outline"] {
 }
 
 #announcement-desc p:last-child {
-    color: #ffffffb0;
+    color: #ffffffd0;
 }
 
 #announcement-header p {
     font-size: 2rem;
     font-weight: bold;
     color: #ffffff;
+}
+
+/* ---------- Registration-form ---------- */
+
+
+.practice-assessment {
+  border: 1px solid #d9c8b4;
+  padding: 16px;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.option {
+  display: flex;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #f6ead8;
+}
+
+#registration-background {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3%;
+}
+
+#registration-form {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    width: 42%;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+#Form-title {
+    background: linear-gradient(90deg, #ff7b00, #ff9500);
+    color: white;
+    padding: 22px 30px;
+    width: 100%;
+}
+
+#Form-title p:first-child {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+#Form-title p:last-child {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+#Form-content {
+    padding: 28px;
+    width: 100%;
+
+}
+
+#Input-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+
+}
+
+#Product-category-input {
+    grid-column: span 2;
+}
+
+#Input-group p,
+.practice-assessment p,
+.standards p,
+legend {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #444;
+}
+
+.standards p:last-of-type {
+    color: #92929293;
+    font-size: 0.70rem;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #f0b97d;
+    border-radius: 10px;
+    outline: none;
+    font-size: 0.95rem;
+    transition: 0.2s ease;
+    background: #fff;
+}
+
+input:focus,
+select:focus {
+    border-color: #ff8800;
+    box-shadow: 0 0 0 3px rgba(255,136,0,0.15);
+}
+
+.practice-assessment,
+.standards {
+    border: 1px solid #f0d4b4;
+    padding: 20px;
+    border-radius: 14px;
+    margin-top: 25px;
+    background: #fffaf4;
+}
+
+.option {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    margin-top: 12px;
+    cursor: pointer;
+    transition: 0.2s ease;
+    background: #fff;
+}
+
+.option:hover {
+    border-color: #ff9500;
+    background: #fff8f0;
+    transform: translateY(-2px);
+}
+
+.option input[type="radio"],
+.option input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #ff8800;
+    margin-top: 4px;
+}
+
+.option span {
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.4;
+}
+
+.option strong {
+    color: #222;
+    font-size: 1rem;
+}
+
+#Submit-btn {
+    width: 100%;
+    margin-top: 28px;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(90deg, #ff7b00, #ff9500);
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+#Submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(255,136,0,0.35);
+}
+
+ion-icon {
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+/* ---------- ts for responsiveness cuz i did it last lmao ---------- */
+
+@media (max-width: 900px) {
+    #registration-form {
+        width: 90%;
+    }
+
+    #Input-group {
+        grid-template-columns: 1fr;
+    }
+
+    #Product-category-input {
+        grid-column: span 1;
+    }
 }
