@@ -4,244 +4,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Vendor Dashboard</title>
+    <title>Vendor Registration</title>
 
-    <link rel="stylesheet" href="Css/dashboard.css">
+    <link rel="stylesheet" href="Css/registration.css">
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 
 <body>
-    <main id="Page1">
-        <section id="Navbars">
+    <main id="Page2">
+        <header id="Navbar1">
+            <div class="Content">
+                <div id="PageTitle">
+                    <ion-icon name="storefront" id="storefront-title"></ion-icon>
 
-            <header id="Navbar1">
-                <div class="Content">
-                    <div id="PageTitle">
-                        <ion-icon name="storefront"></ion-icon>
-
-                        <p>Market Survey System</p>
-                    </div>
-
-                    <div id="Nav1Buttons">
-                        <button class="Buttons" id="SurveyBtn" onclick="window.location.href='Registration.html'">
-                         <ion-icon name="globe-outline" id="globe-icon"></ion-icon>
-                         Register
-                        </button>
-
-                        <button class="Buttons" id="DashboardBtn" onclick="window.location.href='index.html'">
-                            <ion-icon name="bar-chart"></ion-icon>
-                            Admin Dashboard
-                        </button>
-                    </div>
+                    <p>Market Survey System</p>
                 </div>
-            </header>
 
-            <header id="Navbar2">
-                <div class="Content">
-                    <div id="DashboardTitle">
-                        <div id="AdminDashBoardTitle">
-                            <ion-icon name="stats-chart" id="title-icon"></ion-icon>
-                            <p id="AdminDashboard">Admin Dashboard</p>
+                <div id="Nav1Buttons">
+                    <button class="Buttons" id="SurveyBtn" onclick="window.location.href='Registration.html'">
+                        <ion-icon name="globe-outline" id="globe-icon"></ion-icon>
+                        Register
+                    </button>
+
+                    <button class="Buttons" id="DashboardBtn" onclick="window.location.href='index.html'">
+                        <ion-icon name="bar-chart"></ion-icon>
+                        Admin Dashboard
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div id="announcement">
+            <div id="announcement-header">
+                <ion-icon name="storefront" id="storefront-announcement"></ion-icon>
+                <p>Community Public Market</p>
+            </div>
+
+            <div id="announcement-desc">
+                <p>Vendor Registration & Sanitation Compliance Registration</p>
+
+                <div id="mini-desc">
+                    <ion-icon name="sparkles-outline"></ion-icon>
+                    <p>Register your market stall and ensure compliance with heatlh standards</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="registration-background">
+            <div id="registration-form">
+                <!-- Registration form content goes here -->
+                <div id="Form-title">
+                    <p><ion-icon name="checkmark-circle-outline"></ion-icon> Vendor Registration Form</p>
+                    <p>Complete all fields to register your market stall</p>
+                </div>
+
+                <div id="Form-content">
+                    <form>
+                        <div id="Input-group">
+                            <div id="Buisness-name-input">
+                                <p><ion-icon name="bag-handle-outline"></ion-icon> Business Name</p>
+                                <input type="text" id="business-name" placeholder="Vendor Name" required>
+                            </div>
+
+                            <div id="Healt-permit-input">
+                                <p>Health Permit</p>
+                                <input type="text" id="permit-number" placeholder="eg., HP-2026-12345" required>
+                            </div>
+
+                            <div id="Product-category-input">
+                                <p>Product Category</p>
+
+                                <select name="all-products" id="product-category" required>
+                                    <option value="school-supply">School Supply</option>
+                                    <option value="office-supplies">Office Supplies</option>
+                                    <option value="food-beverage">Food & Beverage</option>
+                                    <option value="clothing-apparel">Clothing & Apparel</option>
+                                    <option value="electronics">Electronics</option>
+                                </select>
+                            </div>
                         </div>
 
-                        <p id="VendorCompliance">Market Vendor Compliance Management System</p>
-                    </div>
+                        <fieldset class="practice-assessment">
+                            <p>Sanitary Practices Assessment</p>
 
-                    <div>
-                        <button class="Buttons" id="ExportBtn">
-                            <ion-icon name="code-download-outline"></ion-icon>
-                            Export Report
-                        </button>
-                    </div>
-                </div>
-            </header>
+                            <label class="option">
+                                <input type="radio" name="sanitary" value="good" required>
+                                <span>
+                                    <strong>Good</strong><br>
+                                    Meets all sanitation standards
+                                </span>
+                            </label>
 
-        </section>
+                            <label class="option">
+                                <input type="radio" name="sanitary" value="fair">
+                                <span>
+                                    <strong>Fair</strong><br>
+                                    Meets most standards, some improvements needed
+                                </span>
+                            </label>
 
-        <section id="Metrics">
-            <div id="total-vendors" class="card">
-                <div class="content">
-                    <p id="totalvendor-label" class="card-title">Total Vendors</p>
-                    <p class="Values">0</p>
-                    <p class="desc"></p>
-                </div>
+                            <label class="option">
+                                <input type="radio" name="sanitary" value="poor">
+                                <span>
+                                    <strong>Poor</strong><br>
+                                    Does not meet required standards
+                                </span>
+                            </label>
+                        </fieldset>
 
-                <ion-icon name="people-outline"></ion-icon>
-            </div>
+                        <fieldset class="standards">
+                            <p>Stall Cleanliness Standards</p>
+                            <p>Select all practices that apply to your stall:</p>
 
-            <div id="total-compliant" class="card">
-                <div class="content">
-                    <p class="card-title">Compliant</p>
-                    <p class="Values">0</p>
-                    <p class="desc">~0% compliance rate</p>
-                </div>
+                            <label class="option">
+                                <input type="checkbox" name="cleanliness" value="daily-cleaning">
 
-                <ion-icon name="checkmark-circle-outline"></ion-icon>
-            </div>
+                                <span>
+                                    <strong>Daily Cleaning</strong><br>
+                                    Stall is cleaned thoroughly every day
+                                </span>
+                            </label>
 
-            <div id="total-improvement" class="card">
-                <div class="content">
-                    <p class="card-title">Need Improvement</p>
-                    <p class="Values">0</p>
-                    <p class="desc">Requires follow-up action</p>
-                </div>
+                            <label class="option">
+                                <input type="checkbox" name="cleanliness" value="waste-disposal">
 
-                <ion-icon name="alert-circle-outline"></ion-icon>
-            </div>
+                                <span>
+                                    <strong>Waste Disposal</strong><br>
+                                    Proper waste segregation and disposal system
+                                </span>
+                            </label>
+                        </fieldset>
 
-            <div id="non-compliant" class="card">
-                <div class="content">
-                    <p class="card-title">Non-Compliant</p>
-                    <p class="Values">0</p>
-                    <p class="desc">Immediate attention required</p>
-                </div>
-
-                <ion-icon name="close-circle-outline"></ion-icon>
-            </div>
-
-            <div id="warning" class="warning">
-                <div id="warning-title">
-                    <ion-icon name="alert-circle-outline" id="warning-alert"></ion-icon>
-                    <p>Priority Actions Required</p>
-                </div>
-
-                <div id="warning-message">
-                    <p>No vendors registered yet.</p>
-                    <p>Waiting for submissions...</p>
+                        <button id="Submit-btn" type="submit"><ion-icon name="checkmark-circle-outline"></ion-icon>
+                            Submit Registration</button>
+                    </form>
                 </div>
             </div>
-
-        </section>
-
-        <section id="Data">
-            <div id="product-categories" class="data-card">
-                <p id="category-title" class="data-title">
-                    <ion-icon name="pricetag-outline"></ion-icon>
-                    Product Categories
-                </p>
-
-                <div class="data-content">
-                    <div id="display-warning" class="category-container">
-                        <ion-icon name="bag-outline"></ion-icon>
-                        <p>No categories available.</p>
-                        <p>Categories will appear here once added.</p>
-                    </div>
-
-                    <div id="vendor-list" class="category-container">
-                        <ul>
-                            <li>School Supply <span class="vendor-value">0</span></li>
-                            <li>Office Supplies <span class="vendor-value">0</span></li>
-                            <li>Food & Beverage <span class="vendor-value">0</span></li>
-                            <li>Clothing & Apparel <span class="vendor-value">0</span></li>
-                            <li>Electronics <span class="vendor-value">0</span></li>
-
-                        </ul>
-                    </div>
-                </div>
-
-            </div>
-
-            <div id="vendor-filter" class="data-card">
-                    <p id="filter-title" class="data-title">
-                        <ion-icon name="funnel-outline"></ion-icon>
-                        Filter & Search Vendors
-                    </p>
-
-                <div class="data-content-filter">
-                    <div id="search-content" class="category-container">
-                        <ion-icon name="search-outline"></ion-icon>
-                        <input type="search" id="search-input" placeholder="Search by name or permit number...">
-                    </div>
-
-                    <select id="all-statuses" class="dropdown-option">
-                        <option value="">All Statuses</option>
-                        <option value="compliant">Compliant</option>
-                        <option value="need-improvement">Need Improvement</option>
-                        <option value="non-compliant">Non-Compliant</option>
-                    </select>
-
-                    <select id="all-products" class="dropdown-option">
-                        <option value="">All Products</option>
-                        <option value="school-supply">School Supply</option>
-                        <option value="office-supplies">Office Supplies</option>
-                        <option value="food-beverage">Food & Beverage</option>
-                        <option value="clothing-apparel">Clothing & Apparel</option>
-                        <option value="electronics">Electronics</option>
-                    </select>
-
-                    <p>Showing 0 of 0 vendors</p>
-                </div>
-            </div>
-        </section>
-
-       <section id="total-vendor-list">
-            <div id="vendor-list-content">
-                <table border="0">
-                    <tr>
-                        <th>Business Name</th>
-                        <th>Product</th>
-                        <th>Permit No.</th>
-                    </tr>
-                    <tr>
-                        <td>Golden Bites Street Food</td>
-                        <td>Street Food Stall</td>
-                        <td>HP-2024-00101</td>
-                    </tr>
-                    <tr>
-                        <td>Fresh Harvest Fruits</td>
-                        <td>Fruit Vendor</td>
-                        <td>HP-2024-00102</td>
-                    </tr>
-                    <tr>
-                        <td>Quick Sip Beverages</td>
-                        <td>Juice & Drinks</td>
-                        <td>HP-2024-00103</td>
-                    </tr>
-                    <tr>
-                        <td>Tasty Grill Express</td>
-                        <td>Barbecue Stall</td>
-                        <td>HP-2024-00104</td>
-                    </tr>
-                    <tr>
-                        <td>Sweet Cravings Corner</td>
-                        <td>Desserts & Snacks</td>
-                        <td>HP-2024-00105</td>
-                    </tr>
-                    <tr>
-                        <td>Daily Catch Seafood</td>
-                        <td>Seafood Vendor</td>
-                        <td>HP-2024-00106</td>
-                    </tr>
-                    <tr>
-                        <td>Rice Bowl Station</td>
-                        <td>Rice Meals</td>
-                        <td>HP-2024-00107</td>
-                    </tr>
-                    <tr>
-                        <td>Urban Veggie Market</td>
-                        <td>Vegetable Vendor</td>
-                        <td>HP-2024-00108</td>
-                    </tr>
-                    <tr>
-                        <td>Crunchy Snack Hub</td>
-                        <td>Snack Stall</td>
-                        <td>HP-2024-00109</td>
-                    </tr>
-                    <tr>
-                        <td>Cool Treats Ice Cream</td>
-                        <td>Ice Cream Stall</td>
-                        <td>HP-2024-00110</td>
-                    </tr>
-                </table>
-            </div>
-        </section>
+        </div>
 
     </main>
-</body>
-
-</html>
 <script src="Js/Dashboard_backend.js"></script>
 </body>
+
 </html>
