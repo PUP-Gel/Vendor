@@ -76,3 +76,51 @@ function toggleLang() {
 
   alert("Language switch sample only.");
 }
+
+(function initDateLimits() {
+  const today = new Date();
+  const todayStr = today.toISOString().split('T')[0];
+
+  const visitEl = document.getElementById('inp-date');
+  if (visitEl) { 
+      visitEl.min = '2020-01-01'; 
+      visitEl.max = todayStr; 
+  }
+})();
+
+function isDuplicate(name, date) {
+  const key = (name.trim().toLowerCase() + '|' + date).replace(/\s+/g, '');
+  const entries = JSON.parse(sessionStorage.getItem('survey_entries') || '[]');
+  return entries.includes(key);
+}
+function recordEntry(name, date) {
+  const key = (name.trim().toLowerCase() + '|' + date).replace(/\s+/g, '');
+  const entries = JSON.parse(sessionStorage.getItem('survey_entries') || '[]');
+  entries.push(key);
+  sessionStorage.setItem('survey_entries', JSON.stringify(entries));
+}
+
+const negativePattern = /-\d+/;
+
+if (negativePattern.test(contact)) {
+  mark('inp-contact', true);
+  errors.push('Negative numbers are not allowed.');
+}
+
+function toggleMiddleName() {
+
+  const middleInput = document.getElementById("inp-middle-name");
+  const checkbox = document.getElementById("no-middle-name");
+
+  if (checkbox.checked) {
+    middleInput.value = "N/A";
+    middleInput.disabled = true;
+    middleInput.style.opacity = "0.6";
+  } 
+  
+  else {
+    middleInput.value = "";
+    middleInput.disabled = false;
+    middleInput.style.opacity = "1";
+  }
+}

@@ -10,21 +10,11 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
 <nav>
   <div class="nav-logo" id="nav-logo">Local Tourism Feedback Survey</div>
 
   <div class="nav-right">
     <a href="#" class="nav-link" id="nav-dest">Destinations</a>
-
-    <button class="lang-btn" onclick="toggleLang()">
-      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
-        <circle cx="10" cy="10" r="8"/>
-        <path d="M10 2c0 0-3 4-3 8s3 8 3 8M10 2c0 0 3 4 3 8s-3 8-3 8M2 10h16"/>
-      </svg>
-
-      <span id="lang-label">Language (EN/PH)</span>
-    </button>
   </div>
 </nav>
 
@@ -90,12 +80,66 @@
       <h2 class="panel-title">Visitor's Information</h2>
 
       <div class="field-group">
-        <label class="field-label">1. Name</label>
+        <label class="field-label">1. Last Name</label>
         <input class="s-input" type="text" id="inp-name" placeholder="Enter your response here"/>
       </div>
 
+        <div class="field-group">
+        <label class="field-label">2. First Name</label>
+        <input class="s-input" type="text" id="inp-name" placeholder="Enter your response here"/>
+      </div>
+
+      
+        <div class="field-group">
+  <label class="field-label">3. Middle Name</label>
+
+  <input 
+    class="s-input" 
+    type="text" 
+    id="inp-middle-name"
+    placeholder="Enter your response here"
+  />
+
+  <label class="radio-item" style="margin-top:10px; display:flex; align-items:center; gap:8px;">
+    <input 
+      type="checkbox" 
+      id="no-middle-name"
+      onchange="toggleMiddleName()"
+    />
+    I do not have a middle name
+  </label>
+</div>
+
+            <div class="field-group">
+        <label class="field-label">4. Gender</label>
+
+        <div class="radio-group">
+
+          <label class="radio-item">
+            <input type="radio" name="gender" value="male"/>
+            Male
+          </label>
+
+          <label class="radio-item">
+            <input type="radio" name="gender" value="female"/>
+            Female
+          </label>
+
+          <label class="radio-item">
+            <input type="radio" name="gender" value="prefer_not"/>
+            Prefer not to say
+          </label>
+          
+        </div>
+      </div>
+
+            <div class="field-group">
+        <label class="field-label">5. Birthday</label>
+        <input class="s-date" type="date" id="inp-birthday"/>
+      </div>
+
       <div class="field-group">
-        <label class="field-label">2. Nationality</label>
+        <label class="field-label">6. Nationality</label>
 
         <div class="radio-group">
           <label class="radio-item">
@@ -110,13 +154,46 @@
         </div>
       </div>
 
+      <div class="field-group" id="group-contact">
+        <label class="field-label" id="label-contact">5. Contact Number</label>
+        <input class="s-input" type="tel" id="inp-contact" placeholder="e.g. 09XX-XXX-XXXX" maxlength="15"/>
+      </div>
+
       <div class="field-group">
-        <label class="field-label">3. Date of Visit</label>
+        <label class="field-label">7. Email</label>
+        <input class="s-input" type="email" id="inp-email" placeholder="e.g. yourname@email.com"/>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">8. Date of Visit</label>
         <input class="s-date" type="date" id="inp-date"/>
       </div>
 
       <div class="field-group">
-        <label class="field-label">4. Visit Frequency</label>
+        <label class="field-label">9. Time of Visit</label>
+        <input class="s-time" type="time" id="inp-time"/>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">10. Visit Type</label>
+
+        <div class="radio-group">
+
+          <label class="radio-item">
+            <input type="radio" name="visit-type" value="walk-in"/>
+            Walk-in
+          </label>
+
+          <label class="radio-item">
+            <input type="radio" name="visit-type" value="post-visit"/>
+            Post-visit
+          </label>
+
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">11. Visit Frequency</label>
 
         <div class="radio-group">
 
@@ -199,6 +276,21 @@
         </div>
       </div>
 
+      <div class="rating-row">
+
+        <span class="rating-label">
+         5. Overall Experience
+        </span>
+
+        <div class="star-row" id="stars-5">
+          <span class="star" onclick="setRating(5,1)">★</span>
+          <span class="star" onclick="setRating(5,2)">★</span>
+          <span class="star" onclick="setRating(5,3)">★</span>
+          <span class="star" onclick="setRating(5,4)">★</span>
+          <span class="star" onclick="setRating(5,5)">★</span>
+        </div>
+      </div>
+      
       <hr class="section-divider"/>
 
       <h3 class="comment-title">Comments / Feedback</h3>
@@ -214,6 +306,30 @@
       <div class="comment-group">
         <label class="comment-label">
           2. Would you recommend this place?
+        </label>
+
+        <textarea class="s-textarea" id="inp-recommend"></textarea>
+      </div>
+
+      <div class="comment-group">
+        <label class="comment-label">
+          3. What did you like the most about the place?
+        </label>
+
+        <textarea class="s-textarea" id="inp-recommend"></textarea>
+      </div>
+
+      <div class="comment-group">
+        <label class="comment-label">
+          4. What challenges or problems did you encounter during your visit?
+        </label>
+
+        <textarea class="s-textarea" id="inp-recommend"></textarea>
+      </div>
+
+      <div class="comment-group">
+        <label class="comment-label">
+          5. What improvements would you suggest?
         </label>
 
         <textarea class="s-textarea" id="inp-recommend"></textarea>
